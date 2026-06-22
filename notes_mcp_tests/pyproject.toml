@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notes_mcp_tests"
+version = "0.1.0"
+description = "Visitor-based tests for the notes_mcp server tools"
+requires-python = ">=3.11"
+dependencies = [
+    "notes_mcp",
+    "steves_notes",
+    "note_iterator",
+    "test_utils",
+]
+
+[tool.setuptools.packages.find]
+include = ["notes_mcp_tests*"]
