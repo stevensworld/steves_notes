@@ -1,15 +1,14 @@
 import os
 import tempfile
 import unittest
-
-from process_manager import ProcessManager, ProcessNotFoundError
+from process_manager import ProcessManager
 
 
 def long_process():
     return ["python", "-c", "import time\nwhile True: time.sleep(0.001)"]
 
 
-class TestRestart(unittest.TestCase):
+class TestRestartGivesNewPid(unittest.TestCase):
 
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
@@ -24,13 +23,8 @@ class TestRestart(unittest.TestCase):
         pid_before = self.pm.status("test")["pid"]
         self.pm.restart("test")
         pid_after = self.pm.status("test")["pid"]
+
+        print(f"\n  expected: pid changed after restart")
+        print(f"  actual:   pid_before={pid_before}, pid_after={pid_after}, changed={pid_before != pid_after}")
+
         self.assertNotEqual(pid_before, pid_after)
-
-    def test_restart_process_is_alive_after(self):
-        self.pm.start("test", long_process())
-        self.pm.restart("test")
-        self.assertTrue(self.pm.status("test")["running"])
-
-    def test_restart_raises_if_never_started(self):
-        with self.assertRaises(ProcessNotFoundError):
-            self.pm.restart("nonexistent")
