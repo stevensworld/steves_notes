@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audio_tagger"
+version = "0.1.0"
+description = "Applies ID3 tags to MP3 files using notes.json metadata"
+requires-python = ">=3.11"
+dependencies = [
+    "mutagen",
+]
+
+[tool.setuptools.packages.find]
+include = ["audio_tagger*"]
