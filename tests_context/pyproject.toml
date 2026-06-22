@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "tests_context"
+version = "0.1.0"
+description = "Installs and runs all test packages"
+requires-python = ">=3.11"
+dependencies = [
+    "process_manager",
+    "process_manager_tests",
+]
+
+[project.scripts]
+run-tests = "tests_context.runner:run"
+
+[tool.setuptools.packages.find]
+include = ["tests_context*"]
