@@ -21,20 +21,20 @@ fi
 # ── Step 3: Install packages ──────────────────────────────────────────
 
 echo "── Upgrading setuptools"
-conda run -n "$ENV_NAME" pip install --upgrade setuptools
+conda run --no-capture-output -n "$ENV_NAME" pip install --upgrade setuptools
 
 echo "── Installing packages"
 
-conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager"
-conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/test_utils"
-conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager_tests"
+conda run --no-capture-output -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager"
+conda run --no-capture-output -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/test_utils"
+conda run --no-capture-output -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager_tests"
 
 # ── Step 4: Run tests ─────────────────────────────────────────────────
 
 echo "── Running tests"
 echo ""
 
-conda run -n "$ENV_NAME" python "$PACKAGES_DIR/process_manager_tests/process_manager_tests/visit/visit.py"
+conda run --no-capture-output -n "$ENV_NAME" python "$PACKAGES_DIR/process_manager_tests/process_manager_tests/visit/visit.py"
 
 echo ""
 echo "── Done."
