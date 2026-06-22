@@ -56,8 +56,8 @@ class ProcessManager:
         if self._is_alive(pid):
             try:
                 os.kill(pid, signal.SIGTERM)
-                for _ in range(timeout):
-                    time.sleep(1)
+                for _ in range(timeout * 20):
+                    time.sleep(0.05)
                     if not self._is_alive(pid):
                         break
                 else:

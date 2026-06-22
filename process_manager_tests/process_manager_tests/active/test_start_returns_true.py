@@ -1,27 +1,15 @@
-import os
-import tempfile
-import unittest
-from process_manager import ProcessManager
+from process_manager_tests.lib.base_test import BaseTest
 
 
-def long_process():
-    return ["python", "-c", "import time\nwhile True: time.sleep(0.001)"]
+def instant_process():
+    return ["python", "-c", "import sys; sys.exit(0)"]
 
 
-class TestStartReturnsTrue(unittest.TestCase):
+class TestStartReturnsTrue(BaseTest):
 
-    def setUp(self):
-        self.tmpdir = tempfile.TemporaryDirectory()
-        self.pm = ProcessManager(pid_dir=os.path.join(self.tmpdir.name, "pids"))
-
-    def tearDown(self):
-        self.pm.stop_all()
-        self.tmpdir.cleanup()
+    description = "proves start() launches a process and returns True"
+    expected = "True"
 
     def test_start_returns_true(self):
-        result = self.pm.start("test", long_process())
-
-        print(f"\n  expected: True")
-        print(f"  actual:   {result}")
-
+        result = self.pm.start("test", instant_process())
         self.assertTrue(result)
