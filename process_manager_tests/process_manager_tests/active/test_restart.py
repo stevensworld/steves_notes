@@ -6,7 +6,7 @@ from process_manager import ProcessManager, ProcessNotFoundError
 
 
 def long_process():
-    return ["python", "-c", "import time; time.sleep(60)"]
+    return ["python", "-c", "import time\nwhile True: time.sleep(0.001)"]
 
 
 class TestRestart(unittest.TestCase):
