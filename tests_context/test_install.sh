@@ -26,15 +26,15 @@ conda run -n "$ENV_NAME" pip install --upgrade setuptools
 echo "── Installing packages"
 
 conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager"
+conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/test_utils"
 conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager_tests"
-conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/tests_context"
 
 # ── Step 4: Run tests ─────────────────────────────────────────────────
 
 echo "── Running tests"
 echo ""
 
-conda run -n "$ENV_NAME" python -m tests_context
+conda run -n "$ENV_NAME" python "$PACKAGES_DIR/process_manager_tests/process_manager_tests/visit/visit.py"
 
 echo ""
 echo "── Done."

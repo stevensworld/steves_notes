@@ -3,16 +3,15 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "litellm_process"
+name = "litellm_process_tests"
 version = "0.1.0"
-description = "Manages the LiteLLM proxy as a detached subprocess"
+description = "Test suite for the litellm_process package"
 requires-python = ">=3.11"
 dependencies = [
+    "litellm_process",
     "process_manager",
+    "test_utils",
 ]
 
-[project.scripts]
-litellm-setup = "litellm_process.setup:setup"
-
 [tool.setuptools.packages.find]
-include = ["litellm_process*"]
+include = ["litellm_process_tests*"]
