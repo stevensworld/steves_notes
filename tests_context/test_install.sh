@@ -33,6 +33,12 @@ install_phase() {
     echo "── Installing litellm_process_tests"
     conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/litellm_process_tests"
 
+    echo "── Installing notes_mcp packages"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/steves_notes"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/note_iterator"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/notes_mcp"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/notes_mcp_tests"
+
     set +e
 }
 
@@ -66,9 +72,16 @@ run_litellm_tests() {
     done
 }
 
+run_notes_mcp_tests() {
+    echo ""
+    echo "── Running notes_mcp tests"
+    conda run --no-capture-output -n "$PM_ENV" python "$PACKAGES_DIR/notes_mcp_tests/notes_mcp_tests/visit/visit.py"
+}
+
 test_phase() {
     run_process_manager_tests
     run_litellm_tests
+    run_notes_mcp_tests
 }
 
 
