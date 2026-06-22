@@ -22,6 +22,7 @@ class SynthesizeRequest(BaseModel):
     speed: float = 1.0
     job_id: str = "000"
     output_dir: str = "."
+    name: str = "final"
 
 
 @app.get("/health")
@@ -79,7 +80,8 @@ def synthesize_single(req: SynthesizeRequest):
         segment.export(chunk_path, format="mp3")
         chunk_files.append(chunk_path)
 
-    final_path = os.path.join(job_dir, "final.mp3")
+    output_filename = f"{req.name}.mp3"
+    final_path = os.path.join(job_dir, output_filename)
     filter_complex = ""
     for i in range(len(chunk_files)):
         filter_complex += f"[{i}:a]aresample=44100,pan=mono|c0=c0[a{i}];"
@@ -95,7 +97,7 @@ def synthesize_single(req: SynthesizeRequest):
     for f in chunk_files:
         os.remove(f)
 
-    return {"job_id": req.job_id, "file": "final.mp3", "output_dir": job_dir}
+    return {"job_id": req.job_id, "file": output_filename, "output_dir": job_dir}
 
 
 @app.get("/download/{job_id}/{filename}")

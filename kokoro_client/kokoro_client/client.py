@@ -1,6 +1,7 @@
 import json
 import os
 import urllib.request
+from datetime import datetime
 
 CONFIG = {
     "host": "localhost",
@@ -33,11 +34,12 @@ class KokoroClient:
         with urllib.request.urlopen(req, timeout=300) as r:
             return json.loads(r.read().decode())
 
-    def synthesize_single(self, text: str, job_id: str, output_dir: str, voice: str = "af_heart", speed: float = 1.0) -> dict:
+    def synthesize_single(self, text: str, job_id: str, output_dir: str, name: str = "final", voice: str = "af_heart", speed: float = 1.0) -> dict:
         payload = json.dumps({
             "text": text,
             "job_id": job_id,
             "output_dir": output_dir,
+            "name": name,
             "voice": voice,
             "speed": speed,
         }).encode()
@@ -58,3 +60,8 @@ class KokoroClient:
 
     def download_all(self, job_id: str, files: list, dest: str) -> list:
         return [self.download(job_id, f, dest) for f in files]
+
+    def speak(self, text: str, name: str = "final", output_dir: str = "/tmp", dest: str = "/tmp/downloaded", voice: str = "af_heart", speed: float = 1.0) -> str:
+        job_id = datetime.now().strftime("%Y%m%d_%H%M%S")
+        result = self.synthesize_single(text, job_id=job_id, output_dir=output_dir, name=name, voice=voice, speed=speed)
+        return self.download(job_id, result["file"], dest=dest)
