@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "notes_mcp"
+version = "0.1.0"
+description = "FastMCP server exposing NoteNode tree operations as tools"
+requires-python = ">=3.11"
+dependencies = [
+    "steves_notes",
+    "note_iterator",
+    "fastmcp",
+]
+
+[tool.setuptools.packages.find]
+include = ["notes_mcp*"]

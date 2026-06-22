@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "note_iterator"
+version = "0.1.0"
+description = "Depth-first NoteNode tree walker"
+requires-python = ">=3.11"
+dependencies = [
+    "steves_notes",
+]
+
+[tool.setuptools.packages.find]
+include = ["note_iterator*"]

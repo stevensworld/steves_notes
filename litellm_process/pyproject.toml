@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "litellm_process"
+version = "0.1.0"
+description = "Manages the LiteLLM proxy as a detached subprocess"
+requires-python = ">=3.11"
+dependencies = [
+    "process_manager",
+]
+
+[tool.setuptools.packages.find]
+include = ["litellm_process*"]

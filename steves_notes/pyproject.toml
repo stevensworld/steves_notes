@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "steves_notes"
+version = "0.1.0"
+description = "NoteNode tree data model and Builder"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["steves_notes*"]

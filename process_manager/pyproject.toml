@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "process_manager"
+version = "0.1.0"
+description = "Lightweight subprocess lifecycle manager"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["process_manager*"]
