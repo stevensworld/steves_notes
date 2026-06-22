@@ -20,6 +20,9 @@ fi
 
 # ── Step 3: Install packages ──────────────────────────────────────────
 
+echo "── Upgrading setuptools"
+conda run -n "$ENV_NAME" pip install --upgrade setuptools
+
 echo "── Installing packages"
 
 conda run -n "$ENV_NAME" pip install -e "$PACKAGES_DIR/process_manager"
