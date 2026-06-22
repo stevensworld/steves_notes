@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kokoro_process"
+version = "0.1.0"
+description = "Manages the kokoro_server FastAPI process via process_manager"
+requires-python = ">=3.11"
+dependencies = [
+    "process_manager",
+    "kokoro_server",
+]
+
+[tool.setuptools.packages.find]
+include = ["kokoro_process*"]

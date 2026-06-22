@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kokoro_server"
+version = "0.1.0"
+description = "FastAPI server wrapping Kokoro TTS pipeline"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "kokoro",
+    "soundfile",
+    "pydub",
+]
+
+[project.scripts]
+kokoro-server = "kokoro_server.server:run"
+
+[tool.setuptools.packages.find]
+include = ["kokoro_server*"]
