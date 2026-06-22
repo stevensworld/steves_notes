@@ -2,7 +2,7 @@
 
 PACKAGES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/$(basename "${BASH_SOURCE[0]}")"
-PM_ENV="prove_process_manager"
+PM_ENV="speak_notes"
 PYTHON_VERSION="3.11"
 
 
@@ -38,6 +38,30 @@ install_phase() {
     conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/note_iterator"
     conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/notes_mcp"
     conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/notes_mcp_tests"
+
+    echo "── Installing kokoro packages"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/kokoro_server"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/kokoro_process"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/kokoro_client"
+    conda run --no-capture-output -n "$PM_ENV" pip install -e "$PACKAGES_DIR/audio_tagger"
+
+    echo "── Creating notes env from notes_environment.yml"
+    NOTES_YML="$PACKAGES_DIR/../notes_environment.yml"
+    if conda env list | grep -q "^notes "; then
+        echo "   notes env already exists — skipping create."
+    else
+        conda env create -f "$NOTES_YML"
+    fi
+
+    echo "── Installing local packages into notes env"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/process_manager"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/kokoro_server"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/kokoro_process"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/kokoro_client"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/audio_tagger"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/steves_notes"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/note_iterator"
+    conda run --no-capture-output -n notes pip install -e "$PACKAGES_DIR/notes_mcp"
 
     set +e
 }

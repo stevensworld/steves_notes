@@ -10,8 +10,12 @@ echo "── Working directory: $WORK_DIR"
 
 cat > "$WORK_DIR/uninstall.sh" << 'EOF'
 #!/bin/bash
-echo "── Removing conda env: prove_process_manager"
-conda env remove -n prove_process_manager -y
+echo "── Removing conda env: speak_notes"
+conda env remove -n speak_notes -y
+echo "── Removing conda env: litellm_secure_env"
+conda env remove -n litellm_secure_env -y
+echo "── Removing conda env: notes"
+conda env remove -n notes -y
 echo "── Removing cloned repo"
 rm -rf "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/steves_notes"
 echo "── Done."
