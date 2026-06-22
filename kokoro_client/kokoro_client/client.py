@@ -33,6 +33,22 @@ class KokoroClient:
         with urllib.request.urlopen(req, timeout=300) as r:
             return json.loads(r.read().decode())
 
+    def synthesize_single(self, text: str, job_id: str, output_dir: str, voice: str = "af_heart", speed: float = 1.0) -> dict:
+        payload = json.dumps({
+            "text": text,
+            "job_id": job_id,
+            "output_dir": output_dir,
+            "voice": voice,
+            "speed": speed,
+        }).encode()
+        req = urllib.request.Request(
+            f"{self._base}/synthesize/single",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=300) as r:
+            return json.loads(r.read().decode())
+
     def download(self, job_id: str, filename: str, dest: str) -> str:
         url = f"{self._base}/download/{job_id}/{filename}"
         os.makedirs(dest, exist_ok=True)
