@@ -3,7 +3,8 @@ import io
 import numpy as np
 import soundfile as sf
 from pydub import AudioSegment
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from kokoro import KPipeline
 
@@ -11,6 +12,7 @@ PORT = 4001
 
 app = FastAPI()
 pipeline = KPipeline(lang_code='a')
+_output_dirs: dict = {}
 
 
 class SynthesizeRequest(BaseModel):
@@ -30,6 +32,7 @@ def health():
 def synthesize(req: SynthesizeRequest):
     job_dir = os.path.join(req.output_dir, req.job_id)
     os.makedirs(job_dir, exist_ok=True)
+    _output_dirs[req.job_id] = req.output_dir
 
     generator = pipeline(
         req.text,
@@ -50,6 +53,14 @@ def synthesize(req: SynthesizeRequest):
         files.append(filename)
 
     return {"job_id": req.job_id, "files": files, "output_dir": job_dir}
+
+
+@app.get("/download/{job_id}/{filename}")
+def download(job_id: str, filename: str):
+    filepath = os.path.join(_output_dirs.get(job_id, "."), job_id, filename)
+    if not os.path.isfile(filepath):
+        raise HTTPException(status_code=404, detail=f"File not found: {filepath}")
+    return FileResponse(filepath, media_type="audio/mpeg", filename=filename)
 
 
 def run():
