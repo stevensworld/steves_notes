@@ -21,9 +21,9 @@ def setup():
             check=True
         )
 
-    print(f"── Installing litellm=={LITELLM_VERSION}")
+    print(f"── Installing litellm[proxy]=={LITELLM_VERSION}")
     subprocess.run(
-        ["conda", "run", "-n", CONDA_ENV, "pip", "install", f"litellm=={LITELLM_VERSION}"],
+        ["conda", "run", "-n", CONDA_ENV, "pip", "install", f"litellm[proxy]=={LITELLM_VERSION}"],
         check=True
     )
 
