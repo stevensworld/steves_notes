@@ -1,27 +1,13 @@
 #!/bin/bash
 
-# Clones steves_notes from GitHub, creates a fresh conda env,
-# installs process_manager and process_manager_tests, and runs the tests.
+# Creates a conda env, installs packages from the cloned repo, and runs the tests.
+# Usage: bash test_install.sh <repo_root>
 
 set -e
 
-REPO_URL="git@github.com:stevensworld/steves_notes.git"
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/steves_notes"
+PACKAGES_DIR="$1"
 ENV_NAME="steves_notes_rebuild"
 PYTHON_VERSION="3.11"
-
-# ── Step 1: Clone ─────────────────────────────────────────────────────
-
-echo "── Cloning $REPO_URL"
-
-if [ -d "$REPO_DIR" ]; then
-    echo "   Repo already exists at $REPO_DIR — pulling latest."
-    git -C "$REPO_DIR" pull
-else
-    git clone "$REPO_URL" "$REPO_DIR"
-fi
-
-PACKAGES_DIR="$REPO_DIR/packages"
 
 # ── Step 2: Create conda env ──────────────────────────────────────────
 
