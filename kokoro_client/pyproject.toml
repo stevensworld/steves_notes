@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kokoro_client"
+version = "0.1.0"
+description = "HTTP client for the kokoro_server TTS API"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["kokoro_client*"]
