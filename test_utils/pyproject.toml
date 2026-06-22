@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "test_utils"
+version = "0.1.0"
+description = "Shared test visitor and test listing utilities"
+requires-python = ">=3.11"
+
+[tool.setuptools.packages.find]
+include = ["test_utils*"]

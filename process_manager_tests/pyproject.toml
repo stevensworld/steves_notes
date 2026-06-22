@@ -9,6 +9,7 @@ description = "Test suite for the process_manager package"
 requires-python = ">=3.11"
 dependencies = [
     "process_manager",
+    "test_utils",
 ]
 
 [tool.setuptools.packages.find]
