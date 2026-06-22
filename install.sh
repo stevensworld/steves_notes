@@ -14,8 +14,7 @@ echo "── Removing conda env: speak_notes"
 conda env remove -n speak_notes -y
 echo "── Removing conda env: litellm_secure_env"
 conda env remove -n litellm_secure_env -y
-echo "── Removing conda env: notes"
-conda env remove -n notes -y
+# notes env is not removed — it is the dev environment and must be cleaned up manually if needed
 echo "── Removing cloned repo"
 rm -rf "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/steves_notes"
 echo "── Done."
