@@ -9,35 +9,32 @@ def long_process():
     return ["python", "-c", "import time; time.sleep(60)"]
 
 
-def make_manager(tmpdir):
-    return ProcessManager(pid_dir=os.path.join(tmpdir, "pids"))
-
-
 class TestStatus(unittest.TestCase):
 
+    def setUp(self):
+        self.tmpdir = tempfile.TemporaryDirectory()
+        self.pm = ProcessManager(pid_dir=os.path.join(self.tmpdir.name, "pids"))
+
+    def tearDown(self):
+        self.pm.stop_all()
+        self.tmpdir.cleanup()
+
     def test_status_running(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pm = make_manager(tmpdir)
-            pm.start("test", long_process())
-            s = pm.status("test")
-            self.assertEqual(s["name"], "test")
-            self.assertTrue(s["running"])
-            self.assertIsNotNone(s["pid"])
-            self.assertIsNotNone(s["started_at"])
-            pm.stop("test")
+        self.pm.start("test", long_process())
+        s = self.pm.status("test")
+        self.assertEqual(s["name"], "test")
+        self.assertTrue(s["running"])
+        self.assertIsNotNone(s["pid"])
+        self.assertIsNotNone(s["started_at"])
 
     def test_status_not_running(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pm = make_manager(tmpdir)
-            s = pm.status("unknown")
-            self.assertEqual(s["name"], "unknown")
-            self.assertFalse(s["running"])
-            self.assertIsNone(s["pid"])
-            self.assertIsNone(s["started_at"])
+        s = self.pm.status("unknown")
+        self.assertEqual(s["name"], "unknown")
+        self.assertFalse(s["running"])
+        self.assertIsNone(s["pid"])
+        self.assertIsNone(s["started_at"])
 
     def test_status_after_stop(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pm = make_manager(tmpdir)
-            pm.start("test", long_process())
-            pm.stop("test")
-            self.assertFalse(pm.status("test")["running"])
+        self.pm.start("test", long_process())
+        self.pm.stop("test")
+        self.assertFalse(self.pm.status("test")["running"])

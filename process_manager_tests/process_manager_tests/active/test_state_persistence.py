@@ -11,23 +11,26 @@ def long_process():
 
 class TestStatePersistence(unittest.TestCase):
 
-    def test_status_readable_by_new_instance(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pid_dir = os.path.join(tmpdir, "pids")
-            pm1 = ProcessManager(pid_dir=pid_dir)
-            pm1.start("test", long_process())
-            pid = pm1.status("test")["pid"]
+    def setUp(self):
+        self.tmpdir = tempfile.TemporaryDirectory()
+        self.pid_dir = os.path.join(self.tmpdir.name, "pids")
+        self.pm = ProcessManager(pid_dir=self.pid_dir)
 
-            pm2 = ProcessManager(pid_dir=pid_dir)
-            self.assertEqual(pm2.status("test")["pid"], pid)
-            pm2.stop("test")
+    def tearDown(self):
+        self.pm.stop_all()
+        self.tmpdir.cleanup()
+
+    def test_status_readable_by_new_instance(self):
+        self.pm.start("test", long_process())
+        pid = self.pm.status("test")["pid"]
+
+        pm2 = ProcessManager(pid_dir=self.pid_dir)
+        self.assertEqual(pm2.status("test")["pid"], pid)
+        pm2.stop("test")
 
     def test_stop_by_new_instance(self):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pid_dir = os.path.join(tmpdir, "pids")
-            pm1 = ProcessManager(pid_dir=pid_dir)
-            pm1.start("test", long_process())
+        self.pm.start("test", long_process())
 
-            pm2 = ProcessManager(pid_dir=pid_dir)
-            pm2.stop("test")
-            self.assertFalse(pm2.status("test")["running"])
+        pm2 = ProcessManager(pid_dir=self.pid_dir)
+        pm2.stop("test")
+        self.assertFalse(pm2.status("test")["running"])
