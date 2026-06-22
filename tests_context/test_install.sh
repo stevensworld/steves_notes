@@ -1,11 +1,10 @@
 #!/bin/bash
 
 # Creates a conda env, installs packages from the cloned repo, and runs the tests.
-# Usage: bash test_install.sh <repo_root>
 
 set -e
 
-PACKAGES_DIR="$1"
+PACKAGES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_NAME="steves_notes_rebuild"
 PYTHON_VERSION="3.11"
 
