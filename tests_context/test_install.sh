@@ -5,7 +5,7 @@
 set -e
 
 PACKAGES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-ENV_NAME="steves_notes_rebuild"
+ENV_NAME="prove_process_manager"
 PYTHON_VERSION="3.11"
 
 # ── Step 2: Create conda env ──────────────────────────────────────────
