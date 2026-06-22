@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "process_manager_tests"
+version = "0.1.0"
+description = "Test suite for the process_manager package"
+requires-python = ">=3.11"
+dependencies = [
+    "process_manager",
+]
+
+[tool.setuptools.packages.find]
+include = ["process_manager_tests*"]
