@@ -9,6 +9,7 @@ description = "Organizes thoughts into objectives and subtopics using steves_not
 requires-python = ">=3.11"
 dependencies = [
     "steves_notes",
+    "thoughts",
 ]
 
 [tool.setuptools.packages.find]

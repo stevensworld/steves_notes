@@ -6,6 +6,7 @@ All configuration lives in the CONFIG block at the top of this file.
 
 import io
 import json
+import os
 from contextlib import redirect_stdout
 from mcp.server.fastmcp import FastMCP
 from steves_notes import Builder, setup_workspace
@@ -15,7 +16,7 @@ from note_iterator import NoteIterator
 # ── Configuration ─────────────────────────────────────────────────────
 
 CONFIG = {
-    "notes_file":    "notes.json",
+    "notes_file":    os.environ.get("NOTES_FILE", "notes.json"),
     "module_id":     "mod_01",
     "module_name":   "Electrical Systems",
     "server_name":   "Note Tree Builder",
@@ -23,8 +24,8 @@ CONFIG = {
 
 # ── Server setup ──────────────────────────────────────────────────────
 
-mcp     = FastMCP(CONFIG["server_name"])
-builder = setup_workspace(filename=CONFIG["notes_file"])
+mcp      = FastMCP(CONFIG["server_name"])
+builder  = setup_workspace(filename=CONFIG["notes_file"])
 iterator = NoteIterator(builder.root)
 
 

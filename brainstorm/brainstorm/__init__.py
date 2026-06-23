@@ -7,6 +7,7 @@ from .session import (
     list_subtopics,
     show_tree,
 )
+from thoughts import scrap
 
 __all__ = [
     "new_objective",
@@ -16,4 +17,5 @@ __all__ = [
     "set_subtopic",
     "list_subtopics",
     "show_tree",
+    "scrap",
 ]
