@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brainstorm"
+version = "0.1.0"
+description = "Organizes thoughts into objectives and subtopics using steves_notes"
+requires-python = ">=3.11"
+dependencies = [
+    "steves_notes",
+]
+
+[tool.setuptools.packages.find]
+include = ["brainstorm*"]

@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thoughts"
+version = "0.1.0"
+description = "Raw note ingestion pipeline — polishes text via LiteLLM and saves to notes.json"
+requires-python = ">=3.11"
+dependencies = [
+    "steves_notes",
+]
+
+[tool.setuptools.packages.find]
+include = ["thoughts*"]
